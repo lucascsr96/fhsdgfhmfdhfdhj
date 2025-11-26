@@ -1,0 +1,1212 @@
+<!DOCTYPE html>
+<html lang="pt-PT">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SynkCamp - Acelere o Seu Futuro</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        peach: '#FFE5B4',     
+                        peachLight: '#FFF8ED', 
+                        peachDark: '#FFD180', 
+                        limeAccent: '#CCFF00',
+                        limeHover: '#B2E600', 
+                        darkText: '#0F172A',
+                        graySubtitle: '#64748B',
+                        cardBorder: '#E2E8F0',
+                    },
+                    fontFamily: {
+                        sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+                    },
+                    boxShadow: {
+                        'soft': '0 10px 40px -10px rgba(0, 0, 0, 0.05)',
+                        'card': '0 0 0 1px rgba(226, 232, 240, 0.6), 0 4px 6px -1px rgba(0, 0, 0, 0.02)',
+                        'card-hover': '0 0 0 1px rgba(204, 255, 0, 0.6), 0 20px 40px -12px rgba(204, 255, 0, 0.2)',
+                        'lime-glow': '0 0 20px rgba(204, 255, 0, 0.5)',
+                        'button': '0 4px 14px 0 rgba(0,0,0,0.1)',
+                    },
+                    animation: {
+                        'fade-in-up': 'fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards',
+                        'blob': 'blob 7s infinite',
+                        'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                    },
+                    keyframes: {
+                        fadeInUp: {
+                            '0%': { opacity: '0', transform: 'translateY(20px)' },
+                            '100%': { opacity: '1', transform: 'translateY(0)' },
+                        },
+                        blob: {
+                            '0%': { transform: 'translate(0px, 0px) scale(1)' },
+                            '33%': { transform: 'translate(30px, -50px) scale(1.1)' },
+                            '66%': { transform: 'translate(-20px, 20px) scale(0.9)' },
+                            '100%': { transform: 'translate(0px, 0px) scale(1)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            background-color: #FAFAFA;
+            color: #0F172A;
+            -webkit-font-smoothing: antialiased;
+            overflow-x: hidden;
+        }
+        
+        /* Smooth Scrolling */
+        html {
+            scroll-behavior: smooth;
+        }
+        
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #F1F5F9;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #CBD5E1;
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #94A3B8;
+        }
+
+        /* Glassmorphism Classes */
+        .glass-nav {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(20px) saturate(180%);
+            -webkit-backdrop-filter: blur(20px) saturate(180%);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.5);
+        }
+
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.6);
+            backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+        }
+
+        /* Modal Transitions */
+        .modal {
+            transition: opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .modal-content {
+            transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.4s ease;
+        }
+        body.modal-active {
+            overflow: hidden;
+        }
+
+        .line-clamp-2 {
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        /* View Transitions */
+        .view-section {
+            transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1), transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+            width: 100%;
+        }
+        .hidden-view {
+            display: none !important;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        /* Utilities */
+        .text-gradient {
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-image: linear-gradient(135deg, #0F172A 0%, #475569 100%);
+        }
+    </style>
+</head>
+<body class="font-sans min-h-screen flex flex-col relative selection:bg-limeAccent selection:text-darkText">
+
+    <!-- Animated Background Blobs -->
+    <div class="fixed inset-0 z-[-1] overflow-hidden pointer-events-none">
+        <div class="absolute top-0 left-1/4 w-96 h-96 bg-limeAccent/20 rounded-full mix-blend-multiply filter blur-3xl opacity-70 animate-blob"></div>
+        <div class="absolute top-0 right-1/4 w-96 h-96 bg-peach/30 rounded-full mix-blend-multiply filter blur-3xl opacity-70 animate-blob" style="animation-delay: 2s"></div>
+        <div class="absolute -bottom-32 left-1/3 w-96 h-96 bg-pink-100 rounded-full mix-blend-multiply filter blur-3xl opacity-70 animate-blob" style="animation-delay: 4s"></div>
+        <!-- Grid Pattern Overlay -->
+        <div class="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-20"></div>
+    </div>
+
+    <!-- Navbar -->
+    <nav class="sticky top-0 z-50 glass-nav transition-all duration-300">
+        <div class="container mx-auto px-6 py-4 flex flex-col md:flex-row justify-between items-center gap-4">
+            <!-- Logo -->
+            <div onclick="navigateTo('home')" class="flex items-center gap-3 group cursor-pointer select-none">
+                <div class="relative">
+                    <div class="absolute inset-0 bg-limeAccent blur-md opacity-0 group-hover:opacity-60 transition-opacity duration-500"></div>
+                    <div class="relative bg-white p-2 rounded-xl border border-gray-100 shadow-sm group-hover:scale-105 transition-transform duration-300">
+                        <i data-lucide="layers" class="w-6 h-6 text-darkText stroke-[2.5]"></i>
+                    </div>
+                </div>
+                <h1 class="text-2xl font-extrabold tracking-tight text-darkText group-hover:tracking-wide transition-all duration-300">
+                    Synk<span class="text-gray-400 font-medium">Camp</span>
+                </h1>
+            </div>
+
+            <!-- Search Bar -->
+            <div class="relative w-full md:w-[480px] group">
+                <div class="absolute inset-0 bg-gradient-to-r from-limeAccent to-peach opacity-0 group-hover:opacity-20 rounded-full blur transition-opacity duration-300"></div>
+                <div class="relative flex items-center">
+                    <i data-lucide="search" class="absolute left-5 w-5 h-5 text-gray-400 group-focus-within:text-limeHover transition-colors"></i>
+                    <input type="text" id="searchInput" placeholder="O que quer aprender hoje?" 
+                        class="w-full pl-12 pr-14 py-3.5 bg-white/60 backdrop-blur-sm border border-gray-200/60 rounded-full focus:outline-none focus:bg-white focus:border-limeAccent focus:ring-4 focus:ring-limeAccent/10 transition-all shadow-sm text-sm font-medium placeholder-gray-400">
+                    <div class="absolute right-3 hidden md:flex items-center gap-1 pointer-events-none">
+                        <kbd class="hidden sm:inline-block border border-gray-200 rounded px-2 py-0.5 text-[10px] font-bold text-gray-400 bg-gray-50">⌘ K</kbd>
+                    </div>
+                </div>
+            </div>
+
+            <!-- User Actions (Logged Out) -->
+            <div id="auth-buttons-logout" class="hidden md:flex items-center gap-3">
+                <button onclick="openAuthModal('login')" class="text-sm font-bold text-gray-600 hover:text-darkText transition-colors px-5 py-2.5 hover:bg-white/50 rounded-full border border-transparent hover:border-gray-200/50">Entrar</button>
+                <button onclick="openAuthModal('register')" class="bg-darkText text-white px-6 py-2.5 rounded-full text-sm font-bold shadow-button hover:bg-black hover:shadow-lg hover:-translate-y-0.5 transition-all flex items-center gap-2 group relative overflow-hidden">
+                    <span class="relative z-10">Começar</span>
+                    <i data-lucide="arrow-right" class="w-4 h-4 group-hover:translate-x-1 transition-transform relative z-10"></i>
+                    <div class="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-300"></div>
+                </button>
+            </div>
+
+            <!-- User Actions (Logged In) -->
+            <div id="auth-buttons-login" class="hidden items-center gap-4 relative">
+                <div class="flex items-center gap-3 cursor-pointer group" onclick="toggleUserMenu(event)">
+                    <div class="text-right hidden lg:block">
+                        <p class="text-xs font-bold text-gray-400 uppercase tracking-wide">Bem-vindo,</p>
+                        <p id="nav-username" class="text-sm font-bold text-darkText leading-none">Usuário</p>
+                    </div>
+                    <div class="w-10 h-10 rounded-full bg-limeAccent flex items-center justify-center border-2 border-white shadow-sm hover:scale-105 transition-transform relative">
+                        <span id="nav-initials" class="font-bold text-darkText">U</span>
+                        <!-- Dropdown Indicator -->
+                        <div class="absolute -bottom-1 -right-1 w-4 h-4 bg-white rounded-full border border-gray-100 flex items-center justify-center">
+                            <i data-lucide="chevron-down" class="w-3 h-3 text-gray-500"></i>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Dropdown Menu -->
+                <div id="userDropdown" class="absolute top-full right-0 mt-3 w-56 bg-white rounded-2xl shadow-xl border border-gray-100 overflow-hidden hidden transform origin-top-right transition-all z-50">
+                    <div class="p-2">
+                        <button onclick="navigateTo('profile'); hideUserMenu()" class="w-full flex items-center gap-3 px-4 py-3 hover:bg-gray-50 rounded-xl transition-colors text-left">
+                            <div class="bg-limeAccent/20 p-2 rounded-lg text-darkText">
+                                <i data-lucide="user" class="w-4 h-4"></i>
+                            </div>
+                            <div>
+                                <p class="text-sm font-bold text-darkText">Meu Perfil</p>
+                                <p class="text-xs text-gray-500">Editar dados</p>
+                            </div>
+                        </button>
+                        <div class="h-px bg-gray-100 my-1"></div>
+                        <button onclick="handleSignOut()" class="w-full flex items-center gap-3 px-4 py-3 hover:bg-red-50 hover:text-red-600 rounded-xl transition-colors text-left text-gray-500">
+                            <i data-lucide="log-out" class="w-4 h-4"></i>
+                            <span class="text-sm font-bold">Sair da conta</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- MAIN CONTAINER -->
+    <div id="main-content-wrapper" class="flex-grow flex flex-col">
+
+        <!-- VIEW: HOME -->
+        <div id="view-home" class="view-section">
+            <header class="container mx-auto px-4 py-24 lg:py-32 text-center max-w-5xl relative">
+                <div class="inline-flex items-center gap-2 pl-2 pr-4 py-1.5 rounded-full bg-white border border-limeAccent/30 shadow-[0_2px_10px_rgba(204,255,0,0.15)] mb-8 animate-fade-in-up hover:scale-105 transition-transform cursor-default select-none">
+                    <span class="relative flex h-5 w-5 items-center justify-center">
+                      <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-limeAccent opacity-75"></span>
+                      <span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-limeAccent"></span>
+                    </span>
+                    <span class="text-xs font-bold uppercase tracking-wider text-darkText/80">Plataforma 100% Gratuita</span>
+                </div>
+                
+                <h2 class="text-5xl md:text-7xl lg:text-8xl font-black mb-8 text-darkText leading-[1.05] tracking-tight animate-fade-in-up" style="animation-delay: 0.1s;">
+                    Sincronize sua carreira <br>
+                    <span class="relative inline-block">
+                        <span class="relative z-10 text-transparent bg-clip-text bg-gradient-to-r from-darkText via-gray-700 to-gray-500">com o futuro.</span>
+                        <svg class="absolute w-full h-4 -bottom-1 left-0 text-limeAccent -z-10" viewBox="0 0 100 10" preserveAspectRatio="none">
+                            <path d="M0 5 Q 50 10 100 5" stroke="currentColor" stroke-width="8" fill="none" class="opacity-60" />
+                        </svg>
+                    </span>
+                </h2>
+                
+                <p class="text-graySubtitle text-lg md:text-2xl mb-12 max-w-2xl mx-auto leading-relaxed animate-fade-in-up font-medium" style="animation-delay: 0.2s;">
+                    Minicursos de alto impacto projetados para a era ágil.
+                    Atualize seu stack de habilidades em sessões imersivas.
+                </p>
+                
+                <div class="flex flex-wrap justify-center gap-3 animate-fade-in-up" id="categoryFilters" style="animation-delay: 0.3s;">
+                    <button onclick="filterCourses('all')" class="filter-btn active px-8 py-3.5 rounded-full bg-darkText text-white font-bold shadow-lg hover:shadow-xl hover:-translate-y-1 transition-all ring-4 ring-white flex items-center gap-2 text-sm">
+                        <i data-lucide="layout-grid" class="w-4 h-4"></i> Todos
+                    </button>
+                    <button onclick="filterCourses('marketing')" class="filter-btn px-6 py-3.5 rounded-full bg-white border border-gray-200 text-gray-600 font-bold hover:border-darkText hover:text-darkText transition-all shadow-sm hover:shadow-md flex items-center gap-2 text-sm group">
+                        <span class="w-2 h-2 rounded-full bg-pink-500 group-hover:scale-125 transition-transform"></span> Marketing
+                    </button>
+                    <button onclick="filterCourses('financas')" class="filter-btn px-6 py-3.5 rounded-full bg-white border border-gray-200 text-gray-600 font-bold hover:border-darkText hover:text-darkText transition-all shadow-sm hover:shadow-md flex items-center gap-2 text-sm group">
+                        <span class="w-2 h-2 rounded-full bg-green-500 group-hover:scale-125 transition-transform"></span> Finanças
+                    </button>
+                    <button onclick="filterCourses('renda-extra')" class="filter-btn px-6 py-3.5 rounded-full bg-white border border-gray-200 text-gray-600 font-bold hover:border-darkText hover:text-darkText transition-all shadow-sm hover:shadow-md flex items-center gap-2 text-sm group">
+                        <span class="w-2 h-2 rounded-full bg-blue-500 group-hover:scale-125 transition-transform"></span> Renda Extra
+                    </button>
+                    <button onclick="filterCourses('dev-pessoal')" class="filter-btn px-6 py-3.5 rounded-full bg-white border border-gray-200 text-gray-600 font-bold hover:border-darkText hover:text-darkText transition-all shadow-sm hover:shadow-md flex items-center gap-2 text-sm group">
+                        <span class="w-2 h-2 rounded-full bg-purple-500 group-hover:scale-125 transition-transform"></span> Dev. Pessoal
+                    </button>
+                </div>
+            </header>
+
+            <main class="container mx-auto px-6 pb-32">
+                <div class="flex flex-col md:flex-row justify-between items-end mb-12 border-b border-gray-200/60 pb-6 gap-4">
+                    <div>
+                        <h3 class="text-3xl font-bold text-darkText tracking-tight flex items-center gap-3" id="resultsTitle">
+                            Trilhas em Destaque
+                        </h3>
+                        <p class="text-gray-500 mt-2 font-medium">Conteúdo curado para o seu próximo nível.</p>
+                    </div>
+                    <div class="bg-white/80 backdrop-blur px-5 py-2.5 rounded-2xl border border-gray-100 shadow-sm flex items-center gap-2 text-sm font-bold text-gray-600">
+                        <i data-lucide="layers" class="w-4 h-4 text-limeHover"></i>
+                        <span id="courseCount">Carregando...</span>
+                    </div>
+                </div>
+
+                <div id="courseGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+                    <!-- JS Injects here -->
+                </div>
+
+                <div id="emptyState" class="hidden flex flex-col items-center justify-center py-32 text-center animate-fade-in-up">
+                    <div class="bg-white p-10 rounded-full mb-6 shadow-floating border border-gray-100 relative">
+                        <i data-lucide="search-x" class="w-16 h-16 text-gray-300"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold text-gray-800 mb-2">Nenhuma trilha encontrada</h3>
+                    <button onclick="filterCourses('all')" class="text-darkText font-bold border-b-2 border-limeAccent hover:bg-limeAccent/10 px-2 py-1 rounded transition-colors">Limpar filtros</button>
+                </div>
+            </main>
+            
+            <section class="container mx-auto px-6 py-24">
+                <div class="bg-darkText rounded-[3rem] p-10 md:p-24 text-center relative overflow-hidden shadow-2xl isolate">
+                    <div class="absolute -top-40 -right-40 w-[600px] h-[600px] bg-limeAccent/10 rounded-full blur-[120px] -z-10 animate-pulse-slow"></div>
+                    <div class="absolute -bottom-40 -left-40 w-[600px] h-[600px] bg-peach/10 rounded-full blur-[120px] -z-10 animate-pulse-slow" style="animation-delay: 2s"></div>
+                    <div class="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-10 -z-10"></div>
+                    
+                    <div class="max-w-3xl mx-auto">
+                        <h3 class="text-4xl md:text-6xl font-bold text-white mb-8 tracking-tight">Evolua toda semana.</h3>
+                        <p class="text-gray-400 mb-12 text-xl leading-relaxed">Junte-se a +15.000 profissionais recebendo curadoria de conteúdo.</p>
+                        <button type="button" class="bg-limeAccent hover:bg-limeHover text-darkText font-bold px-8 py-4 rounded-full transition-all shadow-lg hover:scale-105 whitespace-nowrap inline-flex items-center justify-center gap-2">
+                            Inscrever-se <i data-lucide="zap" class="w-4 h-4 fill-current"></i>
+                        </button>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- VIEW: PROFILE -->
+        <div id="view-profile" class="hidden-view view-section">
+            <div class="relative bg-darkText h-48 lg:h-64 overflow-hidden">
+                <div class="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-20"></div>
+                <div class="absolute -top-1/2 -right-1/2 w-[1000px] h-[1000px] bg-limeAccent/20 rounded-full blur-[150px]"></div>
+                <div class="absolute -bottom-1/2 -left-1/2 w-[800px] h-[800px] bg-peach/20 rounded-full blur-[150px]"></div>
+            </div>
+
+            <div class="container mx-auto px-6 -mt-20 relative z-10 pb-20">
+                <button onclick="navigateTo('home')" class="mb-6 text-white hover:text-limeAccent font-bold text-sm flex items-center gap-2 transition-colors bg-black/20 backdrop-blur-sm px-4 py-2 rounded-full w-fit">
+                    <i data-lucide="arrow-left" class="w-4 h-4"></i> Voltar para o Início
+                </button>
+
+                <div class="flex flex-col lg:flex-row gap-8">
+                    <!-- Sidebar Profile Card -->
+                    <div class="lg:w-1/3">
+                        <div class="bg-white rounded-[2rem] shadow-xl border border-gray-100 p-8 text-center">
+                            <div class="relative inline-block mb-4 group">
+                                <img id="profileAvatar" src="https://ui-avatars.com/api/?name=User&background=random" class="w-32 h-32 rounded-full border-4 border-white shadow-lg object-cover">
+                                <label for="avatarInput" class="absolute bottom-0 right-0 bg-limeAccent p-2 rounded-full border-2 border-white shadow-sm hover:scale-110 transition-transform cursor-pointer" title="Alterar foto">
+                                    <i data-lucide="camera" class="w-4 h-4 text-darkText"></i>
+                                </label>
+                                <input type="file" id="avatarInput" hidden accept="image/*">
+                            </div>
+                            <h2 id="profileNameDisplay" class="text-2xl font-black text-darkText mb-1">Carregando...</h2>
+                            <p id="profileEmailDisplay" class="text-sm text-gray-500 font-medium mb-6">...</p>
+                            
+                            <div class="flex justify-center gap-3 mb-8">
+                                <span class="bg-gray-50 text-gray-600 px-3 py-1 rounded-lg text-xs font-bold border border-gray-100">Aluno</span>
+                                <span class="bg-limeAccent/20 text-darkText px-3 py-1 rounded-lg text-xs font-bold border border-limeAccent/20">Pro</span>
+                            </div>
+
+                            <div class="border-t border-gray-100 pt-6 text-left">
+                                <p class="text-xs font-bold text-gray-400 uppercase tracking-wider mb-3">Estatísticas</p>
+                                <div class="space-y-4">
+                                    <div class="flex justify-between items-center">
+                                        <span class="text-sm font-bold text-gray-600 flex items-center gap-2"><i data-lucide="play-circle" class="w-4 h-4 text-limeHover"></i> Cursos Iniciados</span>
+                                        <span class="font-bold text-darkText">4</span>
+                                    </div>
+                                    <div class="flex justify-between items-center">
+                                        <span class="text-sm font-bold text-gray-600 flex items-center gap-2"><i data-lucide="award" class="w-4 h-4 text-orange-400"></i> Certificados</span>
+                                        <span class="font-bold text-darkText">1</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Main Form Area -->
+                    <div class="lg:w-2/3">
+                        <div class="bg-white rounded-[2rem] shadow-soft border border-gray-100 p-8 lg:p-12">
+                            <div class="flex items-center justify-between mb-8">
+                                <div>
+                                    <h3 class="text-2xl font-bold text-darkText">Informações Pessoais</h3>
+                                    <p class="text-gray-500 text-sm">Gerencie seus dados e preferências.</p>
+                                </div>
+                                <button onclick="saveUserProfile()" id="saveProfileBtn" class="bg-darkText hover:bg-black text-white px-6 py-2.5 rounded-xl text-sm font-bold shadow-lg hover:-translate-y-0.5 transition-all flex items-center gap-2">
+                                    <span id="saveBtnText">Salvar Alterações</span>
+                                    <i data-lucide="save" class="w-4 h-4"></i>
+                                    <svg id="saveBtnLoader" class="animate-spin h-4 w-4 text-white hidden" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>
+                                </button>
+                            </div>
+
+                            <form id="profileForm" class="space-y-6" onsubmit="event.preventDefault(); saveUserProfile();">
+                                <div class="grid md:grid-cols-2 gap-6">
+                                    <div>
+                                        <label class="block text-xs font-bold text-gray-500 uppercase mb-2">Nome Completo</label>
+                                        <div class="relative">
+                                            <i data-lucide="user" class="absolute left-4 top-3.5 w-5 h-5 text-gray-400"></i>
+                                            <input type="text" id="profileNameInput" class="w-full pl-12 pr-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:border-limeAccent focus:ring-2 focus:ring-limeAccent/20 transition-all font-medium text-darkText" placeholder="Seu nome">
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <label class="block text-xs font-bold text-gray-500 uppercase mb-2">Telefone</label>
+                                        <div class="relative">
+                                            <i data-lucide="phone" class="absolute left-4 top-3.5 w-5 h-5 text-gray-400"></i>
+                                            <input type="tel" id="profilePhoneInput" class="w-full pl-12 pr-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:border-limeAccent focus:ring-2 focus:ring-limeAccent/20 transition-all font-medium text-darkText" placeholder="(00) 00000-0000">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div>
+                                    <label class="block text-xs font-bold text-gray-500 uppercase mb-2">E-mail (Não editável)</label>
+                                    <div class="relative">
+                                        <i data-lucide="mail" class="absolute left-4 top-3.5 w-5 h-5 text-gray-400"></i>
+                                        <input type="email" id="profileEmailInput" class="w-full pl-12 pr-4 py-3 bg-gray-100 border border-gray-200 rounded-xl text-gray-500 cursor-not-allowed font-medium" disabled>
+                                    </div>
+                                </div>
+
+                                <div>
+                                    <label class="block text-xs font-bold text-gray-500 uppercase mb-2">Bio / Sobre Você</label>
+                                    <div class="relative">
+                                        <textarea id="profileBioInput" rows="4" class="w-full p-4 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:border-limeAccent focus:ring-2 focus:ring-limeAccent/20 transition-all font-medium text-darkText resize-none" placeholder="Conte um pouco sobre sua carreira e objetivos..."></textarea>
+                                    </div>
+                                    <p class="text-right text-xs text-gray-400 mt-1">Máx. 250 caracteres</p>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- VIEW: NEWS -->
+        <div id="view-news" class="hidden-view">
+             <div class="relative bg-white pt-20 pb-24 overflow-hidden border-b border-gray-100">
+                 <div class="absolute top-0 right-0 w-[500px] h-[500px] bg-limeAccent/5 rounded-full blur-3xl translate-x-1/2 -translate-y-1/2"></div>
+                 <div class="container mx-auto px-6 relative z-10">
+                     <div class="max-w-2xl">
+                        <div class="inline-flex items-center gap-2 px-3 py-1 bg-darkText text-white rounded-full text-xs font-bold uppercase tracking-wider mb-6 shadow-lg animate-fade-in-up">
+                            <span class="w-2 h-2 bg-limeAccent rounded-full animate-pulse"></span> Radar SynkCamp
+                        </div>
+                         <h2 class="text-5xl md:text-7xl font-black mb-6 animate-fade-in-up text-darkText tracking-tight">O futuro está <br><span class="text-transparent bg-clip-text bg-gradient-to-r from-limeHover to-green-600">chegando.</span></h2>
+                         <p class="text-gray-500 text-xl animate-fade-in-up leading-relaxed font-medium">Vote nos próximos conteúdos.</p>
+                     </div>
+                 </div>
+            </div>
+            <div class="container mx-auto px-6 py-20">
+                <div class="mb-24">
+                    <h3 class="text-2xl font-bold text-darkText mb-8">Fresquinho do Forno</h3>
+                    <div class="grid md:grid-cols-3 gap-8">
+                        <div class="bg-white p-5 rounded-[1.5rem] shadow-card border border-cardBorder"><h4 class="font-bold text-lg">IA para Criativos</h4><p class="text-sm text-gray-500 mt-2">Novo curso disponível.</p></div>
+                        <div class="bg-white p-5 rounded-[1.5rem] shadow-card border border-cardBorder"><h4 class="font-bold text-lg">Finanças MEI</h4><p class="text-sm text-gray-500 mt-2">Novo curso disponível.</p></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- VIEW: CLASSROOM -->
+        <div id="view-classroom" class="hidden-view view-section">
+            <div class="container mx-auto px-6 py-10">
+                <button onclick="navigateTo('home')" class="mb-8 text-gray-500 hover:text-darkText font-bold text-sm flex items-center gap-2 transition-colors">
+                    <i data-lucide="arrow-left" class="w-4 h-4"></i> Voltar para o início
+                </button>
+
+                <div class="grid lg:grid-cols-12 gap-10">
+                    <div class="lg:col-span-8">
+                        <div class="rounded-[2rem] overflow-hidden shadow-2xl bg-black relative group aspect-video border border-gray-800 cursor-pointer" onclick="playVideo()">
+                            <!-- Video Element (Hidden initially) -->
+                            <iframe id="classroomVideoFrame" class="absolute inset-0 w-full h-full hidden z-20" src="" title="Video Player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                            
+                            <!-- Poster & Controls (Visible initially) -->
+                            <div id="classroomPlayerOverlay" class="absolute inset-0 w-full h-full">
+                                 <!-- Poster -->
+                                 <div class="absolute inset-0 flex items-center justify-center bg-cover bg-center opacity-60 group-hover:opacity-80 transition-opacity duration-500" id="classroomVideoPoster"></div>
+                                 
+                                 <!-- Controls UI Mockup -->
+                                <div class="absolute bottom-0 left-0 right-0 p-6 bg-gradient-to-t from-black/90 via-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                                    <div class="h-1 bg-gray-600 rounded-full mb-4 cursor-pointer relative overflow-hidden">
+                                        <div class="absolute left-0 top-0 h-full bg-limeAccent w-1/3"></div>
+                                    </div>
+                                    <div class="flex items-center justify-between text-white">
+                                        <div class="flex items-center gap-6">
+                                            <button><i data-lucide="play" class="w-6 h-6 fill-white"></i></button>
+                                            <button><i data-lucide="rotate-ccw" class="w-5 h-5"></i></button>
+                                            <div class="text-xs font-mono font-medium">12:45 / 45:00</div>
+                                        </div>
+                                        <div class="flex items-center gap-4">
+                                            <button><i data-lucide="settings" class="w-5 h-5"></i></button>
+                                            <button><i data-lucide="maximize" class="w-5 h-5"></i></button>
+                                        </div>
+                                    </div>
+                                </div>
+                                 
+                                 <!-- Play Button -->
+                                 <div class="absolute inset-0 flex items-center justify-center pointer-events-none">
+                                    <div class="w-20 h-20 bg-limeAccent rounded-full flex items-center justify-center shadow-lime-glow opacity-90">
+                                        <i data-lucide="play" class="w-8 h-8 text-darkText ml-1 fill-darkText"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mt-8">
+                            <div class="flex items-center justify-between mb-4">
+                                <h1 class="text-3xl font-black text-darkText" id="classroomTitle">Título da Aula</h1>
+                                <button class="p-2 rounded-full bg-gray-100 hover:bg-gray-200 text-gray-500 transition-colors"><i data-lucide="bookmark" class="w-5 h-5"></i></button>
+                            </div>
+                            <div class="flex items-center gap-4 mb-8 border-b border-gray-100 pb-8">
+                                <img src="" id="classroomAuthorImg" class="w-12 h-12 rounded-full object-cover ring-2 ring-gray-100">
+                                <div><p class="font-bold text-darkText text-sm" id="classroomAuthor">Nome do Instrutor</p><p class="text-xs text-gray-500">Instrutor Senior SynkCamp</p></div>
+                            </div>
+                            <div class="prose prose-slate max-w-none">
+                                <h3 class="text-xl font-bold text-darkText mb-4">Sobre esta aula</h3>
+                                <p class="text-gray-600 leading-relaxed mb-6" id="classroomDesc">Descrição detalhada do conteúdo da aula...</p>
+                                
+                                <h4 class="font-bold text-darkText mb-3">Recursos da Aula</h4>
+                                <div class="flex gap-4">
+                                    <a href="#" class="flex items-center gap-2 px-4 py-3 bg-gray-50 rounded-xl text-sm font-bold text-gray-600 hover:bg-limeAccent hover:text-darkText transition-colors border border-gray-100">
+                                        <i data-lucide="file-text" class="w-4 h-4"></i> Slides PDF
+                                    </a>
+                                    <a href="#" class="flex items-center gap-2 px-4 py-3 bg-gray-50 rounded-xl text-sm font-bold text-gray-600 hover:bg-limeAccent hover:text-darkText transition-colors border border-gray-100">
+                                        <i data-lucide="code" class="w-4 h-4"></i> Arquivos Fonte
+                                    </a>
+                                </div>
+
+                                <!-- Added: Lesson Complete Button -->
+                                <div class="mt-8 flex items-center justify-between p-4 bg-gray-50 rounded-2xl border border-gray-100">
+                                    <div>
+                                        <p class="text-sm font-bold text-gray-900">Progresso da Aula</p>
+                                        <p class="text-xs text-gray-500">Marque para contabilizar no seu certificado.</p>
+                                    </div>
+                                    <button id="markCompleteBtn" onclick="toggleLessonComplete()" class="flex items-center gap-2 px-6 py-3 rounded-xl font-bold transition-all border-2 border-limeAccent text-darkText hover:bg-limeAccent/20">
+                                        <i data-lucide="check-circle" class="w-5 h-5"></i>
+                                        <span>Marcar Concluída</span>
+                                    </button>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="lg:col-span-4">
+                        <div class="bg-white rounded-3xl shadow-soft border border-gray-100 p-6 sticky top-24">
+                            <div class="flex items-center justify-between mb-6">
+                                <h3 class="font-bold text-darkText">Conteúdo do Curso</h3>
+                                <!-- Progress span removed here as requested -->
+                            </div>
+                            <div class="space-y-2" id="classroomPlaylist"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-white border-t border-gray-200 pt-24 pb-12 mt-auto">
+        <div class="container mx-auto px-6">
+            <div class="flex flex-col md:flex-row justify-between gap-16 mb-20">
+                <div class="max-w-sm">
+                    <div class="flex items-center gap-2 mb-6 select-none">
+                        <div class="bg-limeAccent p-2 rounded-xl border border-darkText/5">
+                            <i data-lucide="layers" class="w-6 h-6 text-darkText"></i>
+                        </div>
+                        <span class="font-extrabold text-darkText text-2xl">SynkCamp</span>
+                    </div>
+                    <p class="text-gray-500 leading-relaxed font-medium text-sm">
+                        Plataforma de aceleração de carreira. Sincronize suas habilidades com as demandas do mercado em tempo recorde.
+                    </p>
+                </div>
+                <div class="grid grid-cols-2 md:grid-cols-3 gap-12">
+                    <div><h4 class="font-bold text-darkText mb-6 text-sm uppercase tracking-wider">Explorar</h4><ul class="space-y-4 text-sm text-gray-500 font-medium"><li><button onclick="navigateTo('home')" class="hover:text-limeHover transition-colors">Cursos</button></li><li><button onclick="navigateTo('news')" class="hover:text-limeHover transition-colors">Novidades</button></li></ul></div>
+                    <div><h4 class="font-bold text-darkText mb-6 text-sm uppercase tracking-wider">Sobre</h4><ul class="space-y-4 text-sm text-gray-500 font-medium"><li><a href="#" class="hover:text-limeHover">Manifesto</a></li><li><a href="#" class="hover:text-limeHover">Contato</a></li></ul></div>
+                </div>
+            </div>
+            <div class="border-t border-gray-100 pt-8 text-center text-xs text-gray-400">&copy; 2024 SynkCamp Inc.</div>
+        </div>
+    </footer>
+
+    <!-- Auth Modal -->
+    <div id="authModal" class="modal opacity-0 pointer-events-none fixed inset-0 z-[150] flex items-center justify-center bg-darkText/80 backdrop-blur-md p-4 transition-all duration-300">
+        <div class="bg-white rounded-3xl shadow-2xl w-full max-w-md overflow-hidden relative transform scale-95 transition-all">
+            <button onclick="closeAuthModal()" class="absolute top-4 right-4 text-gray-400 hover:text-gray-600"><i data-lucide="x" class="w-6 h-6"></i></button>
+            <div class="p-8">
+                <div class="text-center mb-8">
+                    <div class="inline-block bg-limeAccent p-2 rounded-xl border border-darkText/5 mb-4"><i data-lucide="layers" class="w-6 h-6 text-darkText"></i></div>
+                    <h3 class="text-2xl font-black text-darkText mb-1">Bem-vindo</h3>
+                    <p class="text-sm text-gray-500">Acesse sua conta.</p>
+                </div>
+                <div class="flex bg-gray-100 p-1 rounded-xl mb-6 relative">
+                    <div id="auth-tab-bg" class="absolute left-1 top-1 bottom-1 w-[calc(50%-4px)] bg-white rounded-lg shadow-sm transition-all duration-300"></div>
+                    <button onclick="switchAuthTab('login')" class="flex-1 py-2 text-sm font-bold relative z-10 transition-colors" id="tab-login">Login</button>
+                    <button onclick="switchAuthTab('register')" class="flex-1 py-2 text-sm font-bold relative z-10 text-gray-500 transition-colors" id="tab-register">Cadastro</button>
+                </div>
+                <form id="authForm" class="space-y-4">
+                    <div id="nameField" class="hidden"><label class="block text-xs font-bold text-gray-500 uppercase mb-1">Nome</label><input type="text" id="authName" class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-limeAccent focus:ring-2 focus:ring-limeAccent/20 outline-none transition-all bg-gray-50 focus:bg-white"></div>
+                    <div><label class="block text-xs font-bold text-gray-500 uppercase mb-1">E-mail</label><input type="email" id="authEmail" class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-limeAccent focus:ring-2 focus:ring-limeAccent/20 outline-none transition-all bg-gray-50 focus:bg-white"></div>
+                    <div><label class="block text-xs font-bold text-gray-500 uppercase mb-1">Senha</label><input type="password" id="authPassword" class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-limeAccent focus:ring-2 focus:ring-limeAccent/20 outline-none transition-all bg-gray-50 focus:bg-white"></div>
+                    <div class="pt-2"><button type="submit" id="authSubmitBtn" class="w-full bg-darkText text-white font-bold py-3.5 rounded-xl hover:bg-black transition-all shadow-lg hover:-translate-y-0.5 flex items-center justify-center gap-2"><span id="authBtnText">Entrar</span><svg id="authBtnLoader" class="animate-spin h-5 w-5 text-white hidden" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg></button></div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Video Modal (Preview Course) -->
+    <div id="courseModal" class="modal opacity-0 pointer-events-none fixed inset-0 z-[100] flex items-center justify-center bg-darkText/60 backdrop-blur-md p-4 transition-all duration-300">
+        <div class="modal-content bg-white rounded-[2.5rem] shadow-2xl w-full max-w-5xl max-h-[90vh] overflow-y-auto relative flex flex-col transform scale-95 origin-center border border-white/20">
+            <button onclick="closeModal()" class="absolute top-6 right-6 z-20 bg-black/20 hover:bg-black/40 backdrop-blur-md p-3 rounded-full text-white border border-white/10 transition-all shadow-lg hover:rotate-90">
+                <i data-lucide="x" class="w-5 h-5"></i>
+            </button>
+
+            <div class="flex flex-col lg:flex-row h-full">
+                <div class="lg:w-7/12 bg-black relative min-h-[400px] lg:min-h-full group overflow-hidden">
+                    <img id="modalThumbnail" src="" class="absolute inset-0 w-full h-full object-cover opacity-70 transition-transform duration-1000 group-hover:scale-105" alt="Video cover">
+                    <div class="absolute inset-0 bg-gradient-to-t from-darkText via-transparent to-transparent opacity-90"></div>
+                    <div class="absolute inset-0 flex items-center justify-center">
+                         <div id="modalPlayBtn" class="w-24 h-24 bg-limeAccent hover:bg-white rounded-full flex items-center justify-center cursor-pointer transition-all duration-300 shadow-[0_0_40px_rgba(204,255,0,0.3)] hover:shadow-[0_0_60px_rgba(255,255,255,0.4)] hover:scale-110 group-play">
+                            <i data-lucide="play" class="w-8 h-8 text-darkText ml-1 fill-darkText group-hover:text-darkText group-hover:fill-darkText transition-colors"></i>
+                        </div>
+                    </div>
+                    <div class="absolute bottom-10 left-10 right-10 text-white">
+                        <div class="flex items-center gap-3 mb-4">
+                            <span id="modalCategory" class="px-3 py-1 bg-white/10 backdrop-blur-md rounded-lg text-xs font-bold uppercase tracking-wider border border-white/20 text-limeAccent"></span>
+                            <span class="text-xs font-bold text-white/40">•</span>
+                            <span id="modalDuration" class="flex items-center gap-1.5 text-xs font-bold text-white/80 uppercase tracking-wide"><i data-lucide="clock" class="w-3.5 h-3.5"></i> <span></span></span>
+                        </div>
+                        <h2 id="modalTitle" class="text-3xl md:text-5xl font-black leading-tight mb-2 tracking-tight"></h2>
+                    </div>
+                </div>
+
+                <div class="lg:w-5/12 bg-white p-10 flex flex-col">
+                    <div class="flex items-center gap-4 mb-10">
+                        <img src="" id="modalAuthorImg" class="w-12 h-12 rounded-full object-cover ring-2 ring-gray-100">
+                        <div>
+                            <p class="text-xs text-gray-400 font-bold uppercase tracking-wider mb-0.5">Instrutor(a)</p>
+                            <p id="modalAuthor" class="font-bold text-darkText text-lg leading-none"></p>
+                        </div>
+                    </div>
+                    <div class="flex-grow space-y-8">
+                        <div><h4 class="font-bold text-sm text-gray-900 uppercase tracking-wide mb-3 flex items-center gap-2"><i data-lucide="zap" class="w-4 h-4 text-limeHover"></i> Sobre o sprint</h4><p id="modalDescription" class="text-gray-600 leading-relaxed text-sm"></p></div>
+                        <div><h4 class="font-bold text-sm text-gray-900 uppercase tracking-wide mb-4">O que você ganha</h4><ul class="space-y-3"><li class="flex items-center gap-3 text-sm text-gray-600 p-3 rounded-xl bg-gray-50 border border-gray-100"><i data-lucide="file-check" class="w-5 h-5 text-limeHover shrink-0"></i><span class="font-medium">Materiais em PDF</span></li><li class="flex items-center gap-3 text-sm text-gray-600 p-3 rounded-xl bg-gray-50 border border-gray-100"><i data-lucide="medal" class="w-5 h-5 text-limeHover shrink-0"></i><span class="font-medium">Certificado Blockchain</span></li></ul></div>
+                    </div>
+                    <div class="mt-8 pt-6 border-t border-gray-100">
+                        <button id="modalStartBtn" class="w-full bg-darkText hover:bg-black text-white font-bold py-4 px-6 rounded-xl transition-all shadow-button hover:shadow-xl hover:-translate-y-1 flex items-center justify-center gap-2 group">
+                            <span>Iniciar Sprint Gratuito</span>
+                            <i data-lucide="arrow-right" class="w-4 h-4 group-hover:translate-x-1 transition-transform"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+        import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged, updateProfile } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+        import { getFirestore, doc, setDoc, getDoc, updateDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyDEi_xzjrynK1o6Uy3wgNCow6aPnGn9TR4",
+            authDomain: "synkcamp1.firebaseapp.com",
+            projectId: "synkcamp1",
+            storageBucket: "synkcamp1.firebasestorage.app",
+            messagingSenderId: "797972572496",
+            appId: "1:797972572496:web:22fd64718332042f5fe455"
+        };
+
+        let auth, db;
+        try {
+            const app = initializeApp(firebaseConfig);
+            auth = getAuth(app);
+            db = getFirestore(app);
+            console.log("Firebase SynkCamp conectado!");
+        } catch (e) {
+            console.error("Erro init Firebase:", e);
+        }
+
+        // --- Helpers ---
+        function formatCategory(cat) {
+            const map = {
+                'marketing': 'Marketing',
+                'financas': 'Finanças',
+                'renda-extra': 'Renda Extra',
+                'dev-pessoal': 'Dev. Pessoal'
+            };
+            return map[cat] || cat;
+        }
+
+        function getCategoryIcon(cat) {
+             const icons = {
+                'marketing': '<i data-lucide="megaphone" class="w-3 h-3 text-pink-500"></i>',
+                'financas': '<i data-lucide="dollar-sign" class="w-3 h-3 text-green-500"></i>',
+                'renda-extra': '<i data-lucide="briefcase" class="w-3 h-3 text-blue-500"></i>',
+                'dev-pessoal': '<i data-lucide="brain-circuit" class="w-3 h-3 text-purple-500"></i>'
+            };
+            return icons[cat] || '';
+        }
+
+        // --- UI State & Functions ---
+        const authModal = document.getElementById('authModal');
+        const authForm = document.getElementById('authForm');
+        const tabBg = document.getElementById('auth-tab-bg');
+        let isLoginMode = true;
+
+        window.openAuthModal = (mode) => {
+            authModal.classList.remove('opacity-0', 'pointer-events-none');
+            authModal.querySelector('div').classList.add('scale-100');
+            switchAuthTab(mode);
+        };
+
+        window.closeAuthModal = () => {
+            authModal.classList.add('opacity-0', 'pointer-events-none');
+            authModal.querySelector('div').classList.remove('scale-100');
+        };
+
+        window.switchAuthTab = (mode) => {
+            isLoginMode = mode === 'login';
+            const nameField = document.getElementById('nameField');
+            const btnText = document.getElementById('authBtnText');
+            
+            if (isLoginMode) {
+                tabBg.style.transform = 'translateX(0)';
+                document.getElementById('tab-login').classList.remove('text-gray-500');
+                document.getElementById('tab-register').classList.add('text-gray-500');
+                nameField.classList.add('hidden');
+                btnText.innerText = 'Entrar';
+            } else {
+                tabBg.style.transform = 'translateX(100%)';
+                document.getElementById('tab-register').classList.remove('text-gray-500');
+                document.getElementById('tab-login').classList.add('text-gray-500');
+                nameField.classList.remove('hidden');
+                btnText.innerText = 'Cadastrar';
+            }
+        };
+
+        window.toggleUserMenu = (e) => {
+            if(e) e.stopPropagation();
+            const menu = document.getElementById('userDropdown');
+            menu.classList.toggle('hidden');
+        };
+        
+        window.hideUserMenu = () => {
+            document.getElementById('userDropdown').classList.add('hidden');
+        };
+
+        window.handleSignOut = async () => {
+            if (auth) {
+                await signOut(auth);
+                navigateTo('home');
+                hideUserMenu();
+            }
+        };
+
+        let currentVideoId = "kqtD5dpn9C8"; // Default Video ID
+
+        window.playVideo = (videoId) => {
+            // Verifica se é uma string (ID) ou evento de click
+            const idToPlay = (typeof videoId === 'string') ? videoId : currentVideoId;
+            
+            // Usando youtube-nocookie para evitar bloqueios de privacidade/embed
+            const videoUrl = `https://www.youtube-nocookie.com/embed/${idToPlay}?autoplay=1&rel=0&modestbranding=1`; 
+            
+            const frame = document.getElementById('classroomVideoFrame');
+            const overlay = document.getElementById('classroomPlayerOverlay');
+            
+            if (frame && overlay) {
+                frame.src = videoUrl;
+                frame.classList.remove('hidden');
+                overlay.classList.add('hidden');
+            }
+        }
+
+        // New Toggle Function
+        window.toggleLessonComplete = () => {
+            const btn = document.getElementById('markCompleteBtn');
+            if(!btn) return;
+            
+            const text = btn.querySelector('span');
+            const isComplete = btn.classList.contains('bg-limeAccent');
+            
+            if (isComplete) {
+                btn.classList.remove('bg-limeAccent', 'border-transparent');
+                btn.classList.add('border-limeAccent', 'hover:bg-limeAccent/20');
+                text.innerText = "Marcar Concluída";
+            } else {
+                btn.classList.remove('border-limeAccent', 'hover:bg-limeAccent/20');
+                btn.classList.add('bg-limeAccent', 'border-transparent');
+                text.innerText = "Aula Concluída";
+            }
+        }
+
+        // --- Auth Listener & Profile ---
+        async function loadUserProfile(user) {
+            if (!user || !db) return;
+            
+            const displayName = user.displayName || "Usuário";
+            document.getElementById('profileNameDisplay').innerText = "Carregando...";
+            document.getElementById('profileEmailDisplay').innerText = user.email;
+            
+            try {
+                const docRef = doc(db, "users", user.uid);
+                const docSnap = await getDoc(docRef);
+                let data = {};
+                
+                if (docSnap.exists()) {
+                    data = docSnap.data();
+                } else {
+                    data = { name: displayName, email: user.email, phone: "", bio: "" };
+                    await setDoc(docRef, data, { merge: true });
+                }
+                
+                document.getElementById('profileNameDisplay').innerText = data.name || displayName;
+                document.getElementById('profileNameInput').value = data.name || displayName;
+                document.getElementById('profileEmailInput').value = user.email;
+                document.getElementById('profilePhoneInput').value = data.phone || "";
+                document.getElementById('profileBioInput').value = data.bio || "";
+                
+                const avatarUrl = data.avatar || `https://ui-avatars.com/api/?name=${encodeURIComponent(data.name || 'U')}&background=CCFF00&color=0F172A&bold=true`;
+                document.getElementById('profileAvatar').src = avatarUrl;
+                
+            } catch (error) {
+                console.error("Erro carregar perfil:", error);
+                document.getElementById('profileNameDisplay').innerText = displayName;
+            }
+        }
+
+        window.saveUserProfile = async () => {
+            const user = auth.currentUser;
+            if (!user) {
+                alert("Você precisa estar logado para salvar.");
+                return;
+            }
+
+            const newName = document.getElementById('profileNameInput').value;
+            const newPhone = document.getElementById('profilePhoneInput').value;
+            const newBio = document.getElementById('profileBioInput').value;
+            const currentAvatarSrc = document.getElementById('profileAvatar').src;
+            
+            const saveBtn = document.getElementById('saveProfileBtn');
+            const btnText = document.getElementById('saveBtnText');
+            const btnLoader = document.getElementById('saveBtnLoader');
+
+            saveBtn.disabled = true;
+            btnText.innerText = "Salvando...";
+            btnLoader.classList.remove('hidden');
+
+            try {
+                if (newName && newName !== user.displayName) {
+                    await updateProfile(user, { displayName: newName });
+                    document.getElementById('nav-username').innerText = newName;
+                    document.getElementById('nav-initials').innerText = newName.charAt(0).toUpperCase();
+                    document.getElementById('profileNameDisplay').innerText = newName;
+                }
+
+                const userData = {
+                    name: newName,
+                    phone: newPhone,
+                    bio: newBio,
+                    email: user.email
+                };
+
+                if (currentAvatarSrc.startsWith('data:image')) {
+                    if (currentAvatarSrc.length < 500000) {
+                        userData.avatar = currentAvatarSrc;
+                    } else {
+                        console.warn("Imagem muito grande para salvar no Firestore (limite ~500KB).");
+                        alert("A imagem escolhida é muito grande. Tente uma imagem menor.");
+                    }
+                }
+
+                const userRef = doc(db, "users", user.uid);
+                await setDoc(userRef, userData, { merge: true });
+
+                btnText.innerText = "Salvo!";
+                setTimeout(() => {
+                    btnText.innerText = "Salvar Alterações";
+                    saveBtn.disabled = false;
+                    btnLoader.classList.add('hidden');
+                }, 2000);
+
+            } catch (error) {
+                console.error("Erro ao salvar:", error);
+                if (error.code === 'permission-denied') {
+                    alert("⚠️ ERRO DE PERMISSÃO NO FIREBASE ⚠️\n\nO banco de dados bloqueou a escrita.\n\nSOLUÇÃO:\n1. Vá no Console do Firebase > Firestore Database > Regras.\n2. Cole a regra: allow read, write: if request.auth != null;\n3. Clique em Publicar.");
+                } else {
+                    alert("Erro ao salvar: " + error.message); 
+                }
+                btnText.innerText = "Tentar Novamente";
+                saveBtn.disabled = false;
+                btnLoader.classList.add('hidden');
+            }
+        };
+
+        const avatarInput = document.getElementById('avatarInput');
+        if(avatarInput) {
+            avatarInput.addEventListener('change', function(event) {
+                const file = event.target.files[0];
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        document.getElementById('profileAvatar').src = e.target.result;
+                    }
+                    reader.readAsDataURL(file);
+                }
+            });
+        }
+
+        if (auth) {
+            onAuthStateChanged(auth, (user) => {
+                const btnsLogout = document.getElementById('auth-buttons-logout');
+                const btnsLogin = document.getElementById('auth-buttons-login');
+                
+                if (user) {
+                    btnsLogout.classList.add('hidden');
+                    btnsLogout.classList.remove('md:flex');
+                    
+                    btnsLogin.classList.remove('hidden');
+                    btnsLogin.classList.add('flex');
+                    
+                    const name = user.displayName || "Usuário";
+                    document.getElementById('nav-username').innerText = name;
+                    document.getElementById('nav-initials').innerText = name.charAt(0).toUpperCase();
+                    
+                    loadUserProfile(user);
+                } else {
+                    btnsLogin.classList.add('hidden');
+                    btnsLogin.classList.remove('flex');
+                    
+                    btnsLogout.classList.remove('hidden');
+                    btnsLogout.classList.add('md:flex');
+                }
+            });
+        }
+
+        authForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const email = document.getElementById('authEmail').value;
+            const password = document.getElementById('authPassword').value;
+            const name = document.getElementById('authName').value;
+            const btnText = document.getElementById('authBtnText');
+            const btnLoader = document.getElementById('authBtnLoader');
+            const submitBtn = document.getElementById('authSubmitBtn');
+
+            submitBtn.disabled = true;
+            btnText.classList.add('hidden');
+            btnLoader.classList.remove('hidden');
+
+            try {
+                if (isLoginMode) {
+                    await signInWithEmailAndPassword(auth, email, password);
+                } else {
+                    const cred = await createUserWithEmailAndPassword(auth, email, password);
+                    await updateProfile(cred.user, { displayName: name });
+                    await setDoc(doc(db, "users", cred.user.uid), {
+                        name: name,
+                        email: email,
+                        phone: "",
+                        bio: "",
+                        createdAt: new Date().toISOString()
+                    });
+                }
+                closeAuthModal();
+                authForm.reset();
+            } catch (error) {
+                console.error(error);
+                alert("Erro: " + error.message);
+            } finally {
+                submitBtn.disabled = false;
+                btnText.classList.remove('hidden');
+                btnLoader.classList.add('hidden');
+            }
+        });
+
+        window.navigateTo = (viewId) => {
+            const views = ['home', 'news', 'classroom', 'profile'];
+            views.forEach(v => {
+                const el = document.getElementById(`view-${v}`);
+                if (v === viewId) {
+                    el.classList.remove('hidden-view');
+                    el.style.opacity = '0';
+                    el.style.transform = 'translateY(20px)';
+                    requestAnimationFrame(() => {
+                        requestAnimationFrame(() => {
+                            el.style.opacity = '1';
+                            el.style.transform = 'translateY(0)';
+                        });
+                    });
+                } else {
+                    el.style.opacity = '';
+                    el.style.transform = '';
+                    el.classList.add('hidden-view');
+                }
+            });
+            window.scrollTo(0, 0);
+        };
+
+        const courses = [
+            { id: 1, title: "Instagram para Negócios", category: "marketing", author: "Ana Silva", duration: "55 min", views: "12k", rating: 4.8, image: "https://images.unsplash.com/photo-1611162617474-5b21e879e113?w=600&auto=format&fit=crop&q=80", description: "Domine o algoritmo." },
+            { id: 2, title: "Copywriting de Impacto", category: "marketing", author: "Carlos Copy", duration: "1h 15min", views: "8.5k", rating: 4.9, image: "https://images.unsplash.com/photo-1555421689-492a8577bc71?w=600&auto=format&fit=crop&q=80", description: "Palavras que vendem." },
+            { id: 3, title: "Investimento Inteligente", category: "financas", author: "Eduardo Invest", duration: "45 min", views: "22k", rating: 4.7, image: "https://images.unsplash.com/photo-1579621970563-ebec7560ff3e?w=600&auto=format&fit=crop&q=80", description: "Do zero ao primeiro milhão." },
+            { id: 4, title: "Finanças Pessoais Ágeis", category: "financas", author: "Patrícia Plan", duration: "1h 05min", views: "5k", rating: 4.6, image: "https://images.unsplash.com/photo-1554224155-6726b3ff858f?w=600&auto=format&fit=crop&q=80", description: "Organize sua vida financeira." },
+            { id: 5, title: "Design Profissional", category: "renda-extra", author: "Julia Creative", duration: "1h 20min", views: "15k", rating: 4.8, image: "https://images.unsplash.com/photo-1626785774573-4b7993143d23?w=600&auto=format&fit=crop&q=80", description: "Crie designs de alta conversão." },
+            { id: 6, title: "Dropshipping do Zero", category: "renda-extra", author: "Marcos Ecom", duration: "1h 30min", views: "9k", rating: 4.5, image: "https://images.unsplash.com/photo-1556742049-0cfed4f7a07d?w=600&auto=format&fit=crop&q=80", description: "Venda sem estoque." },
+            { id: 7, title: "Produtividade Extrema", category: "dev-pessoal", author: "Roberto Time", duration: "50 min", views: "30k", rating: 4.9, image: "https://images.unsplash.com/photo-1506784983877-45594efa4cbe?w=600&auto=format&fit=crop&q=80", description: "Hackeie seu cérebro." },
+            { id: 8, title: "Oratória e Persuasão", category: "dev-pessoal", author: "Sandra Speak", duration: "1h 10min", views: "7.5k", rating: 4.7, image: "https://images.unsplash.com/photo-1475721027760-f66f7cb2b3eb?w=600&auto=format&fit=crop&q=80", description: "Fale para convencer." }
+        ];
+
+        function renderCourses(data) {
+            const grid = document.getElementById('courseGrid');
+            if(!grid) return;
+            grid.innerHTML = '';
+            
+            if (data.length === 0) {
+                document.getElementById('emptyState').classList.remove('hidden');
+            } else {
+                document.getElementById('emptyState').classList.add('hidden');
+                data.forEach(c => {
+                    const card = document.createElement('div');
+                    card.className = "group animate-fade-in-up bg-white rounded-[1.8rem] p-2 shadow-card hover:shadow-card-hover hover:-translate-y-2 transition-all duration-500 cursor-pointer flex flex-col h-full border border-gray-100/50";
+                    card.innerHTML = `
+                        <div class="relative h-56 rounded-[1.3rem] overflow-hidden mb-4 bg-gray-100">
+                            <img src="${c.image}" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105">
+                            <div class="absolute inset-0 bg-black/5 group-hover:bg-transparent transition-colors"></div>
+                            <div class="absolute top-3 left-3 z-20"><span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/95 backdrop-blur-md text-[10px] font-extrabold uppercase tracking-wider text-darkText shadow-sm">${c.category}</span></div>
+                            <div class="absolute inset-0 z-20 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 backdrop-blur-[2px] bg-black/10"><div class="w-14 h-14 bg-limeAccent rounded-full flex items-center justify-center shadow-lg transform scale-50 group-hover:scale-100 transition-all duration-300"><i data-lucide="play" class="w-6 h-6 text-darkText fill-darkText ml-1"></i></div></div>
+                        </div>
+                        <div class="px-2 pb-2 flex flex-col flex-grow">
+                            <div class="flex justify-between items-start mb-3"><span class="text-[11px] font-bold text-gray-400 flex items-center gap-1 bg-gray-50 px-2.5 py-1 rounded-lg"><i data-lucide="clock" class="w-3 h-3"></i> ${c.duration}</span><span class="flex items-center gap-1 text-[11px] font-bold text-darkText bg-limeAccent/20 px-2.5 py-1 rounded-lg"><i data-lucide="star" class="w-3 h-3 fill-current"></i> ${c.rating}</span></div>
+                            <h3 class="font-bold text-lg leading-snug mb-2 text-darkText line-clamp-2 group-hover:text-limeHover transition-colors">${c.title}</h3>
+                            <div class="mt-auto pt-4 border-t border-gray-100/80 flex items-center gap-3"><img src="https://ui-avatars.com/api/?name=${encodeURIComponent(c.author)}&background=0F172A&color=fff" class="w-8 h-8 rounded-full object-cover ring-2 ring-white shadow-sm"><div class="flex flex-col"><p class="text-xs font-bold text-darkText">${c.author}</p><p class="text-[10px] text-gray-400 font-bold uppercase tracking-wide">Expert</p></div></div>
+                        </div>
+                    `;
+                    card.onclick = () => window.openModal(c.id);
+                    grid.appendChild(card);
+                });
+            }
+            document.getElementById('courseCount').innerText = `${data.length} trilhas`;
+        }
+
+        window.openModal = (id) => {
+            const c = courses.find(x => x.id === id);
+            if(!c) return;
+            
+            // Check if element exists before accessing property
+            const titleEl = document.getElementById('modalTitle');
+            if (titleEl) titleEl.innerText = c.title;
+            
+            const authorEl = document.getElementById('modalAuthor');
+            if (authorEl) authorEl.innerText = c.author;
+            
+            const imgEl = document.getElementById('modalAuthorImg');
+            if (imgEl) imgEl.src = `https://ui-avatars.com/api/?name=${encodeURIComponent(c.author)}&background=0F172A&color=fff`;
+            
+            const descEl = document.getElementById('modalDescription');
+            if (descEl) descEl.innerText = c.description;
+            
+            const durEl = document.getElementById('modalDuration');
+            if (durEl && durEl.querySelector('span')) durEl.querySelector('span').innerText = c.duration;
+            
+            const thumbEl = document.getElementById('modalThumbnail');
+            if (thumbEl) thumbEl.src = c.image;
+            
+            const catEl = document.getElementById('modalCategory');
+            if (catEl) catEl.innerText = formatCategory(c.category);
+            
+            // Start action
+            const startAction = () => {
+                window.closeModal();
+                openClassroom(c);
+            };
+            
+            const startBtn = document.getElementById('modalStartBtn');
+            if (startBtn) startBtn.onclick = startAction;
+            
+            const playBtn = document.getElementById('modalPlayBtn');
+            if (playBtn) playBtn.onclick = startAction;
+
+            const modalEl = document.getElementById('courseModal');
+            if (modalEl) {
+                modalEl.classList.remove('opacity-0', 'pointer-events-none');
+                const content = modalEl.querySelector('div');
+                if (content) content.classList.remove('scale-95');
+            }
+        }
+
+        window.closeModal = () => {
+            const modalEl = document.getElementById('courseModal');
+            if (modalEl) {
+                modalEl.classList.add('opacity-0', 'pointer-events-none');
+                const content = modalEl.querySelector('div');
+                if (content) content.classList.add('scale-95');
+            }
+        }
+
+        function openClassroom(course) {
+            const frame = document.getElementById('classroomVideoFrame');
+            const overlay = document.getElementById('classroomPlayerOverlay');
+            
+            // Reset for new course - Vídeo seguro padrão
+            currentVideoId = "kqtD5dpn9C8"; 
+            
+            if (frame) {
+                frame.classList.add('hidden');
+                frame.src = ""; 
+            }
+            if (overlay) overlay.classList.remove('hidden');
+
+            // Reset Complete Button
+            const btn = document.getElementById('markCompleteBtn');
+            if(btn) {
+                 btn.classList.remove('bg-limeAccent', 'border-transparent');
+                 btn.classList.add('border-limeAccent', 'hover:bg-limeAccent/20');
+                 btn.querySelector('span').innerText = "Marcar Concluída";
+            }
+
+            const titleEl = document.getElementById('classroomTitle');
+            if (titleEl) titleEl.innerText = course.title;
+            
+            const authorEl = document.getElementById('classroomAuthor');
+            if (authorEl) authorEl.innerText = course.author;
+            
+            const imgEl = document.getElementById('classroomAuthorImg');
+            if (imgEl) imgEl.src = `https://ui-avatars.com/api/?name=${encodeURIComponent(course.author)}&background=0F172A&color=fff`;
+            
+            const descEl = document.getElementById('classroomDesc');
+            if (descEl) descEl.innerText = course.description;
+            
+            const posterEl = document.getElementById('classroomVideoPoster');
+            if (posterEl) posterEl.style.backgroundImage = `url('${course.image}')`;
+            
+            const playlist = document.getElementById('classroomPlaylist');
+            if (playlist) {
+                playlist.innerHTML = '';
+                
+                // Lista de vídeos verificados que permitem EMBED
+                const lessons = [
+                    { title: "Introdução e Boas Vindas", dur: "05:00", desc: "Visão geral do curso e configuração do ambiente.", videoId: "kqtD5dpn9C8" }, // Python for Beginners (Mosh) - Seguro
+                    { title: "Conceitos Fundamentais", dur: "15:30", desc: "Entenda a teoria por trás da estratégia antes da prática.", videoId: "rfscVS0vtbw" }, // Python Tutorial (FreeCodeCamp) - Seguro
+                    { title: "Ferramentas Essenciais", dur: "10:15", desc: "Setup das principais ferramentas que usaremos no projeto.", videoId: "W6NZfCO5SIk" }, // JS Tutorial (Mosh) - Seguro
+                    { title: "Mão na Massa: Prática", dur: "20:00", desc: "Construindo o projeto passo a passo com acompanhamento.", videoId: "pkMIc7jRpuw" }, // HTML CSS (BroCode) - Seguro
+                    { title: "Estudo de Caso Real", dur: "12:45", desc: "Análise detalhada de um caso de sucesso no mercado.", videoId: "3JluqTojuME" }, // SQL (Mosh) - Seguro
+                    { title: "Próximos Passos", dur: "08:20", desc: "Como continuar evoluindo e onde buscar mais recursos.", videoId: "V74l_zS1x8E" }, // Git (Fireship) - Seguro
+                ];
+                
+                // Set initial video ID from first lesson
+                currentVideoId = lessons[0].videoId;
+
+                lessons.forEach((l, i) => {
+                    const div = document.createElement('div');
+                    div.className = "flex items-start gap-3 p-3 rounded-xl hover:bg-gray-50 cursor-pointer transition-colors group";
+                    div.innerHTML = `
+                        <div class="w-8 h-8 rounded-full bg-gray-100 flex items-center justify-center text-xs font-bold text-gray-500 group-hover:bg-limeAccent group-hover:text-darkText flex-shrink-0 mt-1">${i+1}</div>
+                        <div class="flex flex-col gap-1">
+                            <span class="text-sm font-bold text-gray-700 group-hover:text-darkText">${l.title}</span>
+                            <span class="text-xs text-gray-400 group-hover:text-gray-500 leading-snug line-clamp-2">${l.desc}</span>
+                            <span class="text-[10px] text-gray-300 font-medium mt-1">${l.dur}</span>
+                        </div>
+                    `;
+                    
+                    div.onclick = () => {
+                        if (titleEl) titleEl.innerText = `${course.title}: ${l.title}`;
+                        if (descEl) descEl.innerText = l.desc;
+                        
+                        currentVideoId = l.videoId;
+                        
+                        // If video is already playing (overlay hidden), update it immediately
+                        if (overlay.classList.contains('hidden')) {
+                            window.playVideo(l.videoId);
+                        }
+                        
+                        // Reset Complete Button when changing lesson
+                        if(btn) {
+                             btn.classList.remove('bg-limeAccent', 'border-transparent');
+                             btn.classList.add('border-limeAccent', 'hover:bg-limeAccent/20');
+                             btn.querySelector('span').innerText = "Marcar Concluída";
+                        }
+                        
+                        Array.from(playlist.children).forEach(c => c.classList.remove('bg-limeAccent/10'));
+                        div.classList.add('bg-limeAccent/10');
+                    };
+                    playlist.appendChild(div);
+                });
+            }
+            
+            setTimeout(() => window.navigateTo('classroom'), 300);
+        }
+
+        window.filterCourses = (cat) => {
+            const btns = document.querySelectorAll('.filter-btn');
+            btns.forEach(b => {
+                if(b.innerText.toLowerCase().includes(cat === 'all' ? 'todos' : cat)) {
+                    b.classList.add('bg-darkText', 'text-white', 'shadow-lg');
+                    b.classList.remove('bg-white', 'text-gray-600');
+                } else {
+                    b.classList.remove('bg-darkText', 'text-white', 'shadow-lg');
+                    b.classList.add('bg-white', 'text-gray-600');
+                }
+            });
+            const searchEl = document.getElementById('searchInput');
+            const term = searchEl ? searchEl.value.toLowerCase() : '';
+            renderCourses(courses.filter(c => (cat === 'all' || c.category === cat) && c.title.toLowerCase().includes(term)));
+        }
+
+        const searchInputEl = document.getElementById('searchInput');
+        if (searchInputEl) {
+            searchInputEl.addEventListener('input', (e) => window.filterCourses('all'));
+        }
+
+        function init() {
+            renderCourses(courses);
+            if (window.lucide) lucide.createIcons();
+        }
+        
+        init();
+    </script>
+</body>
+</html>
